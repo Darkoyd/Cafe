@@ -26,7 +26,9 @@ public class Inventario
 	
 	//Metodos
 	
-	
+	/*
+	 * Método que agrega un café.
+	 */
 	public void agregarCafe(tostion pTostion, molienda pMolienda, presentacion pPresentacion, String pCodigoDeBarras) throws Exception
 	{
 		Cafe x = new Cafe(pTostion, pMolienda, pPresentacion, pCodigoDeBarras);
