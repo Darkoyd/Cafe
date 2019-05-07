@@ -8,6 +8,10 @@ import java.awt.*;
 
 public class InterfazCafe extends JFrame
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Inventario inventario;
 	
 	//------------------------------------------------------------------
