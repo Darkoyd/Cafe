@@ -104,10 +104,69 @@ public class AdministradorBaseDeDatos
 		Statement s = conexion.createStatement( );
 
 		boolean crearTabla = false;
+		//Pergamino
 		try
 		{
-			//Verifica si la tabla juveniles existe. Si existe esta consulta devolverá una respuesta vacía, de lo contrario se generará una excepción
-			//TODO Realizar una consulta cualquiera sobre la tabla. Si no existe la tabla lanzará SQLException
+			String consulta = "SELECT * FROM pergamino WHERE 1=1";
+			ResultSet rs = s.executeQuery(consulta);
+		}
+		catch( SQLException se )
+		{
+
+			crearTabla = true;
+		}
+
+		if( crearTabla )
+		{
+			String consulta2 = "CREATE TABLE pergamino (fechaPergamino Date, pesoKilos float, PRIMARY KEY (fechaPergamino))";
+			s.execute(consulta2);
+		}
+
+		
+		//Trillado
+		crearTabla = false;
+		try
+		{
+			String consulta = "SELECT * FROM trillado WHERE 1=1";
+			ResultSet rs = s.executeQuery(consulta);
+		}
+		catch( SQLException se )
+		{
+
+			crearTabla = true;
+		}
+
+		if( crearTabla )
+		{
+			String consulta2 = "CREATE TABLE trillado (codigoBarras varChar(20), fechaLote Date, fechaTrillado Date, fechaPergamino Date, cantidad int, tostion varChar(20), molienda varChar(20), presentacion varChar(20), PRIMARY KEY (codigoBarras, fechaLote))";
+			s.execute(consulta2);
+		}
+
+		
+		//Inventario
+		crearTabla = false;
+		try
+		{
+			String consulta = "SELECT * FROM inventario WHERE 1=1";
+			ResultSet rs = s.executeQuery(consulta);
+		}
+		catch( SQLException se )
+		{
+
+			crearTabla = true;
+		}
+
+		if( crearTabla )
+		{
+			String consulta2 = "CREATE TABLE inventario (codigoBarras varChar(20), fechaVenta Date, fechaLote Date, fechaTrillado Date, fechaPergamino Date, cantidad int, tostion varChar(20), molienda varChar(20), presentacion varChar(20), PRIMARY KEY (codigoBarras, fechaVenta))";
+			s.execute(consulta2);
+		}
+
+		
+		//Vendido
+		crearTabla = false;
+		try
+		{
 			String consulta = "SELECT * FROM juveniles WHERE 1=1";
 			ResultSet rs = s.executeQuery(consulta);
 		}
@@ -117,10 +176,8 @@ public class AdministradorBaseDeDatos
 			crearTabla = true;
 		}
 
-
 		if( crearTabla )
 		{
-			//TODO Crear la tabla
 			String consulta2 = "CREATE TABLE juveniles (id varchar(255), nombre varchar(255), apellido varchar(255), deporte varchar(255), numero_convocatorias int, fecha_nacimiento Date, genero varchar(3), PRIMARY KEY (id))";
 			s.execute(consulta2);
 		}
