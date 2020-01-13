@@ -1,32 +1,15 @@
 package mundo;
 
-public class Cafe extends SuperCafe
-{
+import java.sql.Date;
+
+import mundo.CafeInventario.molienda;
+import mundo.CafeInventario.presentacion;
+import mundo.CafeInventario.tostion;
+
+
+public class CafeVenta {
 	//Atributos
 	
-	public enum presentacion
-	{
-		MUESTRA,
-		CUARTO,
-		MEDIA,
-		LIBRA,
-		CINCO,
-		DIEZ
-	}
-	public enum tostion
-	{
-		MEDIA_BAJA,
-		MEDIA,
-		MEDIA_ALTA
-	}
-	public enum molienda
-	{
-		EX_FINA,
-		FINA,
-		MEDIA,
-		MEDIA_GRUESA,
-		SIN_MOLER
-	}
 	
 	private tostion tostion;
 	
@@ -36,18 +19,12 @@ public class Cafe extends SuperCafe
 	
 	private int cantidad;
 	
+	private Date fecha;
+	
 	private String codigoDeBarras;
 	
-	//Constructor
+	private String variedad;
 	
-	public Cafe(tostion pTostion, molienda pMolienda, presentacion pPresentacion, String pCodigoDeBarras)
-	{
-		tostion = pTostion;
-		molienda = pMolienda;
-		presentacion = pPresentacion;
-		cantidad = 0;
-		codigoDeBarras = pCodigoDeBarras;
-	}
 	//Metodos
 	
 	public int darCantidad()
@@ -70,9 +47,19 @@ public class Cafe extends SuperCafe
 		return tostion;
 	}
 	
+	public Date darFecha()
+	{
+		return fecha;
+	}
+	
 	public presentacion darPresentacion()
 	{
 		return presentacion;
+	}
+	
+	public String darVariedad()
+	{
+		return variedad;
 	}
 	
 	public void agregarCantidad(int pCantidad)
@@ -83,6 +70,15 @@ public class Cafe extends SuperCafe
 	public void quitarCantidad(int pCantidad)
 	{
 		cantidad -= pCantidad;
+	}
+	public CafeVenta(tostion pTostion, molienda pMolienda, presentacion pPresentacion, Date fecha, String pCodigoDeBarras, String variedad) {
+		tostion = pTostion;
+		molienda = pMolienda;
+		presentacion = pPresentacion;
+		this.fecha = fecha;
+		cantidad = 0;
+		codigoDeBarras = pCodigoDeBarras;
+		this.variedad = variedad;
 	}
 
 }
