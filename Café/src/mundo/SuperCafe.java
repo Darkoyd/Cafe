@@ -11,15 +11,15 @@ public class SuperCafe {
 		VENTA
 	}
 	
-	private float peso;
+	protected float peso;
 	
-	private Date fechaPergamino;
+	protected Date fechaPergamino;
 	
-	private Date fechaTrillado;
+	protected Date fechaTrillado;
 	
-	private Date fechaLote;
+	protected Date fechaLote;
 	
-	private Date fechaVenta;
+	protected Date fechaVenta;
 	
 	public SuperCafe(float peso, Date inicial) {
 		this.peso = peso;
