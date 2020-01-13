@@ -118,7 +118,7 @@ public class AdministradorBaseDeDatos
 
 		if( crearTabla )
 		{
-			String consulta2 = "CREATE TABLE pergamino (fechaPergamino Date, pesoKilos float, PRIMARY KEY (fechaPergamino))";
+			String consulta2 = "CREATE TABLE pergamino (fechaPergamino Date, propietario varchar(255), pesoKilos float, PRIMARY KEY (fechaPergamino, propietario))";
 			s.execute(consulta2);
 		}
 
@@ -185,150 +185,14 @@ public class AdministradorBaseDeDatos
 
 		s.close( );
 	}
-
-	/**
-	 * Devuelve una lista con todos los juveniles registrados en la base de datos
-	 * @return lista con los juveniles registrados en la base de datos
-	 * @throws SQLException se lanza en caso que se genere un problema consultando la base de datos
-	 */
-	public List<Juvenil> darJuveniles() throws SQLException
+	
+	public List<SuperCafe> darCafesPergamino()
 	{
-		//TODO Completar de acuerdo a la documentación.
-		List<Juvenil> lista = new ArrayList<Juvenil>();
-		Statement s = conexion.createStatement( );
-		ResultSet rs = s.executeQuery("SELECT * from juveniles WHERE 1=1");
-		while(rs.next())
-		{
-			String id = rs.getString(1);
-			String nombre = rs.getString(2);
-			String apellido = rs.getString(3);
-			String deporte = rs.getString(4);
-
-			Date fecha = rs.getDate(6);
-			Calendar paraUsar = Calendar.getInstance();
-			paraUsar.setTime(fecha);
-
-			String genero = rs.getString(7);
-			int convocatorias = rs.getInt(5);
-
-			lista.add(new Juvenil(id, nombre, apellido, deporte, convocatorias, paraUsar, (genero.equals("M")? Genero.M: Genero.F)));
-		}
-		s.close();
-		return lista;
-	}
-
-	/**
-	 * Devuelve un juvenil a partir de su identificador
-	 * @param id el número de identificación del juvenil. id != null && id != ""
-	 * @return el juvenil o null en caso que no se encuentre registrado en la base de datos
-	 * @throws SQLException se lanza en caso que ocurra algún error consultando la base de datos
-	 */
-	public Juvenil darJuvenil(String id) throws SQLException
-	{
-		//TODO Completar de acuerdo a la documentación.
-		Juvenil respuesta = null;
-		Statement s = conexion.createStatement();
-		String consulta = "Select * from juveniles WHERE id = '" + id + "'";
-		ResultSet rs = s.executeQuery(consulta);
-		if(rs.next())
-		{
-			String nombre = rs.getString(2);
-			String apellido = rs.getString(3);
-			String deporte = rs.getString(4);
-
-			Date fecha = rs.getDate(6);
-			Calendar paraUsar = Calendar.getInstance();
-			paraUsar.setTime(fecha);
-
-			String genero = rs.getString(7);
-			int convocatorias = rs.getInt(5);
-			respuesta = new Juvenil(id, nombre, apellido, deporte, convocatorias, paraUsar, (genero.equals("M")? Genero.M: Genero.F));
-		}
-		s.close();
-		return respuesta;
-	}
-
-	/**
-	 * Indica si un juvenil se encuentra registrado en la base de datos o no
-	 * @param id el número de identificación del juvenil. id != null && id != ""
-	 * @return true en caso que el juvenil exista o false en caso contrario
-	 * @throws SQLException se lanza en caso que ocurra algún error al consultar la base de datos
-	 */
-	public boolean existeJuvenil(String id) throws SQLException
-	{
-		//TODO Completar de acuerdo a la documentación.
-		boolean respuesta = false;
-		Statement s = conexion.createStatement();
-		String consulta = "Select * from juveniles WHERE id = '" + id + "'";
-		ResultSet rs = s.executeQuery(consulta);
-		respuesta = rs.next();
-		s.close();
-		return respuesta;
-	}
-
-
-	/**
-	 * Permite registrar un juvenil en la base de datos
-	 * @param juvenil el juvenil que se desea registrar. juvenil != null
-	 * @throws ElementoExisteException se lanza en caso que ya exista un juvenil con el id del juvenil que se desea registrar. 
-	 * @throws SQLException se lanza en caso que se genere algún error consultando la base de datos
-	 */
-	public void registrarJuvenil(Juvenil juvenil) throws ElementoExisteException, SQLException
-	{
-		//TODO Completar de acuerdo a la documentación.
-		if(!existeJuvenil(juvenil.darId()))
-		{
-			Statement s = conexion.createStatement();
-			String id = juvenil.darId();
-			String nombre = juvenil.darNombre();
-			String apellido = juvenil.darApellido();
-			String deporte = juvenil.darDeporte();
-
-			Calendar fecha = juvenil.darFechaNacimiento();
-			Date paraUsar = new Date(fecha.getTimeInMillis());
-			String genero = juvenil.darGenero() == Genero.M? "M": "F";
-			int convocatorias = juvenil.darNumeroConvocatorias();
-			String consulta = "INSERT INTO juveniles VALUES ( '" + id + "', '" + nombre + "', '" + apellido + "', '" + deporte + "', "
-					+ convocatorias + ", '" + paraUsar + "', '" +  genero + "' )";
-
-			s.execute(consulta);
-			s.close();
-		}
-		else
-		{
-			throw new ElementoExisteException("Ya existe el juvenil", Tipo.JUVENIL_REPETIDO, juvenil.darId());
-		}
-
-	}
-
-	/**
-	 * Permite eliminar un juvenil de la base de datos
-	 * @param id el identificador del juvenil que se desea eliminar. Es el id de un juvenil que existe en la base de datos
-	 * @throws SQLException se lanza en caso que ocurra algún error consultando la base de datos
-	 */
-	public void eliminarJuvenil(String id) throws SQLException
-	{
-		//TODO Completar de acuerdo a la documentación.
-		Statement s = conexion.createStatement();
-		String consulta = "DELETE FROM juveniles WHERE id = '" + id + "'";
-		s.execute(consulta);
-		s.close();
-	}
-
-	/**
-	 * Permite registrar que un juvenil ha sido convocado por una selección juvenil
-	 * <b>post:</b> la cantidad de convocatorias del juvenil ha aumentado en 1 en la base de datos
-	 * @param id el identificador del juvenil al que se le desea registrar que ha sido convocado. 
-	 * Corresponde al id de un juvenil registrado en la base de datos
-	 * @throws SQLException se lanza en caso que se genere algún error consultando la base de datos
-	 */
-	public void registrarConvocatoriaJuvenil(String id)throws SQLException
-	{
-		//TODO Completar de acuerdo a la base de datos.
-		Statement s = conexion.createStatement();
-		String consulta = "UPDATE juveniles SET numero_convocatorias = numero_convocatorias + 1 WHERE ID = '" + id + "'";
-		s.execute(consulta);
-		s.close();
+		List<SuperCafe> cafes = new ArrayList<SuperCafe>();
+		
+		
+		
+		return cafes;
 	}
 
 }
