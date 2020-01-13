@@ -4,13 +4,16 @@ import java.sql.Date;
 
 public class Pergamino {
 	
-	protected float peso;
+	private float peso;
 	
-	protected Date fechaPergamino;
+	private Date fechaPergamino;
 	
-	public Pergamino(float peso, Date inicial) {
+	private String propietario;
+
+	public Pergamino(float peso, Date inicial, String pPropietario) {
 		this.peso = peso;
 		fechaPergamino = inicial;
+		propietario = pPropietario;
 	}
 
 	public float getPeso() {
@@ -19,6 +22,10 @@ public class Pergamino {
 
 	public Date getFechaPergamino() {
 		return fechaPergamino;
+	}
+	
+	public String getPropietario() {
+		return propietario;
 	}
 	
 	public void setPeso(float peso) {

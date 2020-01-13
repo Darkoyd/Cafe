@@ -118,7 +118,7 @@ public class AdministradorBaseDeDatos
 
 		if( crearTabla )
 		{
-			String consulta2 = "CREATE TABLE pergamino (fechaPergamino Date, pesoKilos float, PRIMARY KEY (fechaPergamino))";
+			String consulta2 = "CREATE TABLE pergamino (fechaPergamino Date, propietario varchar(255), pesoKilos float, PRIMARY KEY (fechaPergamino, propietario))";
 			s.execute(consulta2);
 		}
 
