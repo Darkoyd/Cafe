@@ -10,13 +10,9 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
-
-import uniandes.cupi2.apo2H.cupiDeportes.excepciones.ElementoExisteException;
-import uniandes.cupi2.apo2H.cupiDeportes.excepciones.Tipo;
 
 /**
  * Clase que permite administrar la conexión con la base de datos de juveniles

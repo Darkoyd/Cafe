@@ -1,6 +1,6 @@
 package mundo;
 
-public class Cafe 
+public class Cafe extends SuperCafe
 {
 	//Atributos
 	
