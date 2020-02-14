@@ -15,18 +15,18 @@ import java.util.Locale;
 import java.util.Properties;
 
 /**
- * Clase que permite administrar la conexión con la base de datos de juveniles
+ * Clase que permite administrar la conexiï¿½n con la base de datos de juveniles
  *
  */
 public class AdministradorBaseDeDatos 
 {
 	/**
-	 * Conexión con la base de datos
+	 * Conexiï¿½n con la base de datos
 	 */
 	private Connection conexion;
 
 	/**
-	 * Conjunto de propiedades que contienen la configuración de la aplicación
+	 * Conjunto de propiedades que contienen la configuraciï¿½n de la aplicaciï¿½n
 	 */
 	private Properties config;
 
@@ -41,7 +41,7 @@ public class AdministradorBaseDeDatos
 
 	/**
 	 * Construye el administrador de resultados y lo deja listo para conectarse a la base de datos
-	 * @param propiedades Las propiedades para la configuración del administrador - Debe tener las propiedades "admin.db.path", "admin.db.driver", "admin.db.url" y
+	 * @param propiedades Las propiedades para la configuraciï¿½n del administrador - Debe tener las propiedades "admin.db.path", "admin.db.driver", "admin.db.url" y
 	 *        "admin.db.shutdown"
 	 */
 	public AdministradorBaseDeDatos( Properties propiedades )
@@ -49,40 +49,40 @@ public class AdministradorBaseDeDatos
 		config = propiedades;
 
 		// Establecer la ruta donde va a estar la base de datos.
-		// Derby utiliza la propiedad del sistema derby.system.home para saber donde estón los datos
+		// Derby utiliza la propiedad del sistema derby.system.home para saber donde estï¿½n los datos
 		File data = new File( config.getProperty( "admin.db.path" ) );
 		System.setProperty( "derby.system.home", data.getAbsolutePath( ) );
 
 	}
 
 	// -----------------------------------------------------------------
-	// Métodos
+	// Mï¿½todos
 	// -----------------------------------------------------------------
 
 	/**
 	 * Conecta el administrador a la base de datos
-	 * @throws SQLException Se lanza esta excepción si hay problemas realizando la operación
-	 * @throws Exception Se lanza esta excepción si hay problemas con los controladores
+	 * @throws SQLException Se lanza esta excepciï¿½n si hay problemas realizando la operaciï¿½n
+	 * @throws Exception Se lanza esta excepciï¿½n si hay problemas con los controladores
 	 */
 	public void conectarABD( ) throws SQLException, Exception
 	{
-		//Define el driver (programa) que se encarga de hacer la conexión entre java y la base de datos
+		//Define el driver (programa) que se encarga de hacer la conexiï¿½n entre java y la base de datos
 		Locale.setDefault(new Locale("ln", "CO"));
 		String driver = config.getProperty( "admin.db.driver" );
 		Class.forName( driver ).newInstance( );
 
-		//Define el nombre que tendrá la base de datos
+		//Define el nombre que tendrï¿½ la base de datos
 		String url = config.getProperty( "admin.db.url" );
 		conexion = DriverManager.getConnection( url );
 	}
 
 	/**
 	 * Desconecta el administrador de la base de datos y la detiene
-	 * @throws SQLException Se lanza esta excepción si hay problemas realizando la operación
+	 * @throws SQLException Se lanza esta excepciï¿½n si hay problemas realizando la operaciï¿½n
 	 */
 	public void desconectarABD( ) throws SQLException
 	{ 
-		//Cierra la conexión con la base de datos
+		//Cierra la conexiï¿½n con la base de datos
 		conexion.close( );
 		String down = config.getProperty( "admin.db.shutdown" );
 		try
@@ -91,13 +91,13 @@ public class AdministradorBaseDeDatos
 		}
 		catch( SQLException e )
 		{
-			// Al bajar la base de datos se produce siempre una excepción
+			// Al bajar la base de datos se produce siempre una excepciï¿½n
 		}
 	}
 
 	/**
 	 * Crea las tablas necesaria para guardar los juveniles. Si la tabla ya estaba creada entonces no hace nada. <br>
-	 * @throws SQLException Se lanza esta excepción si hay problemas creando la tabla
+	 * @throws SQLException Se lanza esta excepciï¿½n si hay problemas creando la tabla
 	 */
 	public void inicializarTablas( ) throws SQLException
 	{
@@ -115,7 +115,6 @@ public class AdministradorBaseDeDatos
 
 			crearTabla = true;
 		}
-
 		if( crearTabla )
 		{
 			String consulta2 = "CREATE TABLE pergamino (fechaPergamino Date, propietario varchar(255), pesoKilos float, PRIMARY KEY (fechaPergamino, propietario))";

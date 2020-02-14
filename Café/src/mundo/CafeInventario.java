@@ -37,8 +37,12 @@ public class CafeInventario
 	private presentacion presentacion;
 	
 	private int cantidad;
+
+	private int cantidadVendida;
 	
 	private Date fecha;
+
+	private String parentID;
 	
 	private String codigoDeBarras;
 	
@@ -46,15 +50,17 @@ public class CafeInventario
 	
 	//Constructor
 	
-	public CafeInventario(tostion pTostion, molienda pMolienda, presentacion pPresentacion, Date fecha, String pCodigoDeBarras, String variedad)
+	public CafeInventario(tostion pTostion, molienda pMolienda, presentacion pPresentacion, Date fecha, String pCodigoDeBarras, Trillado padre, int cantidad)
 	{
 		tostion = pTostion;
 		molienda = pMolienda;
+		parentID = padre.getId();
 		presentacion = pPresentacion;
 		this.fecha = fecha;
-		cantidad = 0;
+		this.cantidad = cantidad;
+		cantidadVendida = 0;
 		codigoDeBarras = pCodigoDeBarras;
-		this.variedad = variedad;
+		this.variedad = padre.getVariedad();
 	}
 	//Metodos
 	
@@ -93,13 +99,16 @@ public class CafeInventario
 		return variedad;
 	}
 	
-	public void agregarCantidad(int pCantidad)
-	{
-		cantidad += pCantidad;
-	}
-	
 	public void quitarCantidad(int pCantidad)
 	{
 		cantidad -= pCantidad;
+	}
+
+	public String getParentId() {
+		return parentID;
+	}
+
+	public int getCantidadVendida() {
+		return cantidadVendida;
 	}
 }

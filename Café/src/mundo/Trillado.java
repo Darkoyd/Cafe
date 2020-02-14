@@ -1,18 +1,29 @@
 package mundo;
 
 import java.sql.Date;
+import java.util.UUID;
 
 public class Trillado {
 	
+	protected String parentID;
+
+	protected String id;
+
 	protected float peso;
 	
 	protected Date fechaPergamino;
+
+	protected String variedad;
 	
 	protected Date fechaTrillado;
 	
-	public Trillado(float peso, Date inicial) {
+	public Trillado(float peso, Date inicial, Pergamino padre) {
 		this.peso = peso;
-		fechaPergamino = inicial;
+		fechaTrillado = inicial;
+		parentID = padre.getId();
+		variedad = padre.getVariedad();
+		fechaPergamino = padre.getFechaPergamino();
+		id = UUID.randomUUID().toString();
 	}
 
 	public float getPeso() {
@@ -27,7 +38,15 @@ public class Trillado {
 		return fechaTrillado;
 	}
 
-	public void setPeso(float peso) {
-		this.peso = peso;
+	public String getId() {
+		return id;
+	}
+
+	public String getParentId() {
+		return parentID;
+	}
+
+	public String getVariedad() {
+		return variedad;
 	}
 }
